@@ -14,10 +14,6 @@
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -25,10 +21,10 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
+        "payload": "#:(file)::keys",
+        "payloadType": "flow",
         "x": 160,
-        "y": 80,
+        "y": 360,
         "wires": [
             [
                 "863260a9.f45a2"
@@ -47,8 +43,318 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 400,
-        "y": 80,
+        "x": 370,
+        "y": 360,
         "wires": []
+    },
+    {
+        "id": "c8107088.37ef9",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 480,
+        "wires": [
+            [
+                "5f2fdb7b.354154"
+            ]
+        ]
+    },
+    {
+        "id": "4e8237da.b17dc8",
+        "type": "template",
+        "z": "2108ef77.1e383",
+        "name": "page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{ \"Hello\": \"World\" }",
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "65401623.9abfe8"
+            ]
+        ]
+    },
+    {
+        "id": "65401623.9abfe8",
+        "type": "change",
+        "z": "2108ef77.1e383",
+        "name": "Set Headers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 480,
+        "wires": [
+            [
+                "f7d3e35a.082c2"
+            ]
+        ]
+    },
+    {
+        "id": "f7d3e35a.082c2",
+        "type": "http response",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "x": 1090,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "dcc7abc0.644658",
+        "type": "inject",
+        "z": "2108ef77.1e383",
+        "name": "add API key",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "8b371aca.042cd8"
+            ]
+        ]
+    },
+    {
+        "id": "aeb809b1.00b238",
+        "type": "change",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::keys",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6fb8415.b202b8",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "func": "const { keys } = msg\n\nif (!keys) {\n    return { payload: [msg.payload] }\n}\n\nreturn {\n    payload: [...new Set([...keys, msg.payload])]\n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "aeb809b1.00b238"
+            ]
+        ]
+    },
+    {
+        "id": "ac351cd5.da638",
+        "type": "inject",
+        "z": "2108ef77.1e383",
+        "name": "remove API key",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "<key to remove>",
+        "payloadType": "str",
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [
+                "c42dc6a7.537078"
+            ]
+        ]
+    },
+    {
+        "id": "651df6ce.8a42a8",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "func": "const { keys } = msg\n\nif (!keys) {\n    return { payload: [] }\n}\n\nreturn {\n    payload: keys.filter(item => item !== msg.payload)\n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "aeb809b1.00b238"
+            ]
+        ]
+    },
+    {
+        "id": "8b371aca.042cd8",
+        "type": "change",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "keys",
+                "pt": "msg",
+                "to": "#:(file)::keys",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "d6fb8415.b202b8"
+            ]
+        ]
+    },
+    {
+        "id": "c42dc6a7.537078",
+        "type": "change",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "keys",
+                "pt": "msg",
+                "to": "#:(file)::keys",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "651df6ce.8a42a8"
+            ]
+        ]
+    },
+    {
+        "id": "c5401e67.fb7ef",
+        "type": "switch",
+        "z": "2108ef77.1e383",
+        "name": "check keys",
+        "property": "#:(file)::keys",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "key",
+                "vt": "msg"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 550,
+        "y": 480,
+        "wires": [
+            [
+                "4e8237da.b17dc8"
+            ],
+            [
+                "28ba38.ae3195c8"
+            ]
+        ]
+    },
+    {
+        "id": "5f2fdb7b.354154",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "find token",
+        "func": "const header = msg.req.headers.authorization || ''\nconst token = header.split(/\\s+/).pop() || ''\n\nmsg.key = token\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 480,
+        "wires": [
+            [
+                "c5401e67.fb7ef"
+            ]
+        ]
+    },
+    {
+        "id": "28ba38.ae3195c8",
+        "type": "template",
+        "z": "2108ef77.1e383",
+        "name": "page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{ \"Hello\": \"ups\" }",
+        "x": 750,
+        "y": 520,
+        "wires": [
+            [
+                "65401623.9abfe8"
+            ]
+        ]
     }
 ]

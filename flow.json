@@ -2,9 +2,41 @@
     {
         "id": "2108ef77.1e383",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Key-value store API",
         "disabled": false,
         "info": ""
+    },
+    {
+        "id": "3476dbf2.678c24",
+        "type": "subflow",
+        "name": "REST API setup",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5f666a3e.d80f34"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 380,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "3e81f44f.7e4a3c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
     },
     {
         "id": "ea4103c.dfaef",
@@ -23,8 +55,8 @@
         "topic": "",
         "payload": "#:(file)::keys",
         "payloadType": "flow",
-        "x": 160,
-        "y": 360,
+        "x": 120,
+        "y": 280,
         "wires": [
             [
                 "863260a9.f45a2"
@@ -40,11 +72,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 370,
-        "y": 360,
+        "x": 310,
+        "y": 280,
         "wires": []
     },
     {
@@ -52,78 +85,17 @@
         "type": "http in",
         "z": "2108ef77.1e383",
         "name": "",
-        "url": "/kv",
+        "url": "/kv/:key",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 150,
-        "y": 480,
+        "x": 130,
+        "y": 520,
         "wires": [
             [
-                "5f2fdb7b.354154"
+                "d6088836.5aba18"
             ]
         ]
-    },
-    {
-        "id": "4e8237da.b17dc8",
-        "type": "template",
-        "z": "2108ef77.1e383",
-        "name": "page",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{ \"Hello\": \"World\" }",
-        "x": 750,
-        "y": 440,
-        "wires": [
-            [
-                "65401623.9abfe8"
-            ]
-        ]
-    },
-    {
-        "id": "65401623.9abfe8",
-        "type": "change",
-        "z": "2108ef77.1e383",
-        "name": "Set Headers",
-        "rules": [
-            {
-                "t": "set",
-                "p": "headers",
-                "pt": "msg",
-                "to": "{}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "headers.content-type",
-                "pt": "msg",
-                "to": "application/json",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 930,
-        "y": 480,
-        "wires": [
-            [
-                "f7d3e35a.082c2"
-            ]
-        ]
-    },
-    {
-        "id": "f7d3e35a.082c2",
-        "type": "http response",
-        "z": "2108ef77.1e383",
-        "name": "",
-        "x": 1090,
-        "y": 480,
-        "wires": []
     },
     {
         "id": "dcc7abc0.644658",
@@ -142,8 +114,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 170,
-        "y": 200,
+        "x": 130,
+        "y": 120,
         "wires": [
             [
                 "8b371aca.042cd8"
@@ -170,7 +142,7 @@
         "to": "",
         "reg": false,
         "x": 730,
-        "y": 240,
+        "y": 200,
         "wires": [
             []
         ]
@@ -185,8 +157,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 540,
-        "y": 200,
+        "x": 520,
+        "y": 120,
         "wires": [
             [
                 "aeb809b1.00b238"
@@ -208,10 +180,10 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "<key to remove>",
+        "payload": "",
         "payloadType": "str",
-        "x": 180,
-        "y": 280,
+        "x": 140,
+        "y": 200,
         "wires": [
             [
                 "c42dc6a7.537078"
@@ -228,8 +200,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 540,
-        "y": 280,
+        "x": 520,
+        "y": 200,
         "wires": [
             [
                 "aeb809b1.00b238"
@@ -255,8 +227,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 370,
-        "y": 200,
+        "x": 330,
+        "y": 120,
         "wires": [
             [
                 "d6fb8415.b202b8"
@@ -282,8 +254,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 370,
-        "y": 280,
+        "x": 330,
+        "y": 200,
         "wires": [
             [
                 "651df6ce.8a42a8"
@@ -291,17 +263,153 @@
         ]
     },
     {
-        "id": "c5401e67.fb7ef",
-        "type": "switch",
-        "z": "2108ef77.1e383",
-        "name": "check keys",
-        "property": "#:(file)::keys",
-        "propertyType": "flow",
+        "id": "5f2fdb7b.354154",
+        "type": "function",
+        "z": "3476dbf2.678c24",
+        "name": "check authorization",
+        "func": "const header = msg.req.headers.authorization || ''\nconst token = header.split(/\\s+/).pop() || ''\n\nmsg.token = token\nmsg.isAuthorized = (msg.keys || []).includes(token)\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "3e81f44f.7e4a3c"
+            ]
+        ]
+    },
+    {
+        "id": "5f666a3e.d80f34",
+        "type": "change",
+        "z": "3476dbf2.678c24",
+        "name": "set store and keys",
         "rules": [
             {
-                "t": "cont",
-                "v": "key",
-                "vt": "msg"
+                "t": "set",
+                "p": "keys",
+                "pt": "msg",
+                "to": "#:(file)::$parent.keys",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "store",
+                "pt": "msg",
+                "to": "$parent.store",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "82097d50.631e1"
+            ]
+        ]
+    },
+    {
+        "id": "82097d50.631e1",
+        "type": "change",
+        "z": "3476dbf2.678c24",
+        "name": "Set Headers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "5f2fdb7b.354154"
+            ]
+        ]
+    },
+    {
+        "id": "998c6322.b55cb",
+        "type": "comment",
+        "z": "2108ef77.1e383",
+        "name": "Administration                       ",
+        "info": "",
+        "x": 130,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "520bc2ae.dffcdc",
+        "type": "comment",
+        "z": "2108ef77.1e383",
+        "name": "Available REST endpoints",
+        "info": "",
+        "x": 170,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d6088836.5aba18",
+        "type": "subflow:3476dbf2.678c24",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 520,
+        "wires": [
+            [
+                "6532f043.4ee2c"
+            ]
+        ]
+    },
+    {
+        "id": "55eedd0c.4d0a34",
+        "type": "template",
+        "z": "3476dbf2.678c24",
+        "name": "page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{ \"error\": \"Unauthorized\" }",
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "bcdf47af.a3d758"
+            ]
+        ]
+    },
+    {
+        "id": "3e81f44f.7e4a3c",
+        "type": "switch",
+        "z": "3476dbf2.678c24",
+        "name": "is authorized",
+        "property": "isAuthorized",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
             },
             {
                 "t": "else"
@@ -310,50 +418,281 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 550,
-        "y": 480,
+        "x": 190,
+        "y": 180,
         "wires": [
+            [],
             [
-                "4e8237da.b17dc8"
-            ],
-            [
-                "28ba38.ae3195c8"
+                "55eedd0c.4d0a34"
             ]
         ]
     },
     {
-        "id": "5f2fdb7b.354154",
+        "id": "bcdf47af.a3d758",
+        "type": "change",
+        "z": "3476dbf2.678c24",
+        "name": "statusCode 401",
+        "rules": [
+            {
+                "t": "set",
+                "p": "statusCode",
+                "pt": "msg",
+                "to": "401",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "1db29f40.bb2911"
+            ]
+        ]
+    },
+    {
+        "id": "1db29f40.bb2911",
+        "type": "http response",
+        "z": "3476dbf2.678c24",
+        "name": "",
+        "x": 890,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a5e49dce.5183d",
+        "type": "http response",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "x": 890,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "9ddbe330.f28ac",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv/:key",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 680,
+        "wires": [
+            [
+                "dbc45221.7f345"
+            ]
+        ]
+    },
+    {
+        "id": "6365a038.41629",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv/:key",
+        "method": "put",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 600,
+        "wires": [
+            [
+                "dde7c191.e76f6"
+            ]
+        ]
+    },
+    {
+        "id": "dbc45221.7f345",
+        "type": "subflow:3476dbf2.678c24",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 760,
+        "wires": [
+            [
+                "a3494dcb.7114b"
+            ]
+        ]
+    },
+    {
+        "id": "a4d5bf14.25dbe",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv/:key",
+        "method": "delete",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 760,
+        "wires": [
+            [
+                "dbc45221.7f345"
+            ]
+        ]
+    },
+    {
+        "id": "9416fe4d.9bee1",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv",
+        "method": "delete",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 840,
+        "wires": [
+            [
+                "eb0a2dc4.6168"
+            ]
+        ]
+    },
+    {
+        "id": "eb0a2dc4.6168",
+        "type": "subflow:3476dbf2.678c24",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 840,
+        "wires": [
+            [
+                "9ad6756e.e48518"
+            ]
+        ]
+    },
+    {
+        "id": "9ad6756e.e48518",
         "type": "function",
         "z": "2108ef77.1e383",
-        "name": "find token",
-        "func": "const header = msg.req.headers.authorization || ''\nconst token = header.split(/\\s+/).pop() || ''\n\nmsg.key = token\n\nreturn msg;",
+        "name": "",
+        "func": "if (!msg.store) {\n    msg.store = {}\n    return msg\n}\n\nif (msg.store[msg.token]) {\n    delete msg.store[msg.token]\n}\n\nmsg.payload = {}\n\nreturn msg\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 360,
-        "y": 480,
+        "x": 520,
+        "y": 840,
         "wires": [
             [
-                "c5401e67.fb7ef"
+                "a4d664ab.bdd458"
             ]
         ]
     },
     {
-        "id": "28ba38.ae3195c8",
-        "type": "template",
+        "id": "a4d664ab.bdd458",
+        "type": "change",
         "z": "2108ef77.1e383",
-        "name": "page",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{ \"Hello\": \"ups\" }",
-        "x": 750,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::store",
+                "pt": "flow",
+                "to": "store",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 840,
+        "wires": [
+            [
+                "a5e49dce.5183d"
+            ]
+        ]
+    },
+    {
+        "id": "a3494dcb.7114b",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "func": "const { token, payload: { value }, req: { params: { key } } } = msg\n\nif (!msg.store) {\n    msg.store = {}\n}\n\nif (!msg.store[token]) {\n    msg.store[token] = {}\n}\n\nmsg.store[token] = {\n    ...msg.store[token],\n    [key]: value\n}\n\nmsg.payload = {\n    key,\n    value\n}\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 760,
+        "wires": [
+            [
+                "a4d664ab.bdd458"
+            ]
+        ]
+    },
+    {
+        "id": "2bd225f6.87788a",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "func": "const { token, payload: { value }, req: { params: { key } } } = msg\n\nif (!msg.store) {\n    msg.store = {}\n}\n\nif (!msg.store[token]) {\n    msg.store[token] = {}\n}\n\nif (msg.store[token][key] === undefined) {\n    msg.store[token] = {\n        ...msg.store[token],\n        [key]: value\n    }\n}\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6532f043.4ee2c",
+        "type": "function",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "func": "const { token, req: { params: { key } } } = msg\n\nif (!msg.store || !msg.store[token]) {\n    msg.payload = {}\n    return msg\n}\n\nif (key === undefined) {\n    msg.payload = msg.store[token]\n    return msg\n}\n\nmsg.payload = {\n    key,\n    value: msg.store[token][key]\n}\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
         "y": 520,
         "wires": [
             [
-                "65401623.9abfe8"
+                "a5e49dce.5183d"
+            ]
+        ]
+    },
+    {
+        "id": "bfc2f584.ec4b88",
+        "type": "http in",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "url": "/kv",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "d6088836.5aba18"
+            ]
+        ]
+    },
+    {
+        "id": "dde7c191.e76f6",
+        "type": "subflow:3476dbf2.678c24",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 600,
+        "wires": [
+            [
+                "2bd225f6.87788a"
             ]
         ]
     }

@@ -1,1 +1,54 @@
-[]
+[
+    {
+        "id": "2108ef77.1e383",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ea4103c.dfaef",
+        "type": "inject",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "863260a9.f45a2"
+            ]
+        ]
+    },
+    {
+        "id": "863260a9.f45a2",
+        "type": "debug",
+        "z": "2108ef77.1e383",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 80,
+        "wires": []
+    }
+]

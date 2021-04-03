@@ -23,3 +23,7 @@ PUT `/kv/:key`, like POST, but sets value only if it was undefined.
 DELETE `/kv/:key`, removes a key.
 
 DELETE `/kv` removes all stored key-value pairs.
+
+---
+
+![Preview](./preview.png?raw=true "Optional Title")

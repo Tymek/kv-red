@@ -10,6 +10,19 @@ This is a [Node Red](https://nodered.org/) project.
 Add "tokens" in "Administration" part of the flow in Node-Red dashboard.
 Every token creates separate "scope" (same values will not be visible when using other token).
 
+### Making requests
+Add `Authorization: Bearer` header with token provided in setup step, for example:
+```sh
+curl \
+-X POST \
+-d '{"value":"world!"}' \
+-H "Content-type: application/json" \
+-H 'Accept: application/json' \
+-H "Authorization: Bearer 123456789012345678901234567890" \
+https://nodered.example.com/kv/HELLO
+```
+
+
 ## Endpoints
 
 GET `/kv`. Returns JSON with all saved keys `{ "YOUR_KEY": "<your_value>" }`.
